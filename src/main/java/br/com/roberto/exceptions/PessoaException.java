@@ -2,20 +2,27 @@ package br.com.roberto.exceptions;
 
 import java.io.Serializable;
 
-public class CalculadoraException implements Serializable {
-	private static final long serialVersionUID = 6488581961032923984L;
-	
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class PessoaException extends RuntimeException{
+
+	private static final long serialVersionUID = 4263696287835922120L;
 	private String data;
 	private String mensagem;
 	private String descricao;
 	
-	public CalculadoraException(String data, String mensagem, String descricao) {
-		super();
+	public PessoaException(String data, String mensagem, String descricao) {
 		this.data = data;
 		this.mensagem = mensagem;
 		this.descricao = descricao;
 	}
 
+	public PessoaException(String exception) {
+		super(exception);
+	}
+	
 	public String getData() {
 		return data;
 	}
