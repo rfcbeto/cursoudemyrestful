@@ -3,6 +3,7 @@ package br.com.roberto.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,8 +34,8 @@ public class PessoaControllerV2 {
 	}
 	
 	@GetMapping(value="/listartodos")
-	public List<PessoaVO> findAll() throws PessoaException{
-		return service.retornaPessoas();
+	public List<PessoaVO> findAll(Pageable pageable) throws PessoaException{
+		return service.retornaPessoas(pageable);
 	}
 	
 	@PostMapping(value="/criar")

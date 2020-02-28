@@ -1,22 +1,38 @@
 package br.com.roberto.data.vo;
-
 import java.io.Serializable;
 
-public class PessoaVO implements Serializable{
+import org.springframework.hateoas.ResourceSupport;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.github.dozermapper.core.Mapping;
+
+@JsonPropertyOrder({"id", "primeiro_nome","ultimo_nome", "sexo", "endereco"})
+public class PessoaVO extends ResourceSupport implements Serializable{
 	
 	private static final long serialVersionUID = 6912081931710088918L;
 	
-	private Long id;
+	@JsonProperty("identificador")
+	@Mapping("id")
+	private Long identificador;
+	
+	@JsonProperty("primeiro_nome")
 	private String primeiroNome;
+	
+	@JsonProperty("ultimo_nome")
 	private String ultimoNome;
+	
+	@JsonProperty("endereco")
 	private String logradouro;
+	
+	@JsonProperty("sexo")
 	private String genero;
 	
-	public Long getId() {
-		return id;
+	public Long getIdentificador() {
+		return identificador;
 	}
-	public void setId(Long id) {
-		this.id = id;
+	public void setIdentificador(Long identificador) {
+		this.identificador = identificador;
 	}
 	public String getPrimeiroNome() {
 		return primeiroNome;
@@ -45,9 +61,9 @@ public class PessoaVO implements Serializable{
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
 		result = prime * result + ((genero == null) ? 0 : genero.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((identificador == null) ? 0 : identificador.hashCode());
 		result = prime * result + ((logradouro == null) ? 0 : logradouro.hashCode());
 		result = prime * result + ((primeiroNome == null) ? 0 : primeiroNome.hashCode());
 		result = prime * result + ((ultimoNome == null) ? 0 : ultimoNome.hashCode());
@@ -57,7 +73,7 @@ public class PessoaVO implements Serializable{
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
@@ -67,10 +83,10 @@ public class PessoaVO implements Serializable{
 				return false;
 		} else if (!genero.equals(other.genero))
 			return false;
-		if (id == null) {
-			if (other.id != null)
+		if (identificador == null) {
+			if (other.identificador != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!identificador.equals(other.identificador))
 			return false;
 		if (logradouro == null) {
 			if (other.logradouro != null)

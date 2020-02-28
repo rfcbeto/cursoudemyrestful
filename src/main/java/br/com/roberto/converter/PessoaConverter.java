@@ -9,7 +9,7 @@ public class PessoaConverter {
 	
 	public static Pessoa parseVoToEntity(PessoaVO pVo) {
 		Pessoa entidade = new Pessoa();
-		entidade.setId(pVo.getId());
+		entidade.setId(pVo.getIdentificador());
 		entidade.setGenero(pVo.getGenero());
 		entidade.setLogradouro(pVo.getLogradouro());
 		entidade.setPrimeiroNome(pVo.getPrimeiroNome());
@@ -19,7 +19,7 @@ public class PessoaConverter {
 	
 	public static PessoaVO parseEntityToVO(Pessoa pessoa) {
 		PessoaVO pVo = new PessoaVO();
-		pVo.setId(pessoa.getId());
+		pVo.setIdentificador(pessoa.getId());
 		pVo.setGenero(pessoa.getGenero());
 		pVo.setLogradouro(pessoa.getLogradouro());
 		pVo.setPrimeiroNome(pessoa.getPrimeiroNome());
