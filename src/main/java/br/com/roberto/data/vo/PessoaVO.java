@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 
-@JsonPropertyOrder({"id", "primeiro_nome","ultimo_nome", "sexo", "endereco"})
+@JsonPropertyOrder({"identificador", "primeiro_nome","ultimo_nome", "sexo", "endereco"})
 public class PessoaVO extends ResourceSupport implements Serializable{
 	
 	private static final long serialVersionUID = 6912081931710088918L;

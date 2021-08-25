@@ -34,7 +34,11 @@ public class PessoaService {
 	public List<PessoaVO> retornaPessoas(Pageable pageable) throws PessoaException{
 		return DozerConverter.parseListObject(pageRepository.findAll(pageable).getContent(), PessoaVO.class);
 	}
-
+	
+	public List<PessoaVO> retornaPessoasMock(Pageable pageable) throws PessoaException{
+		return DozerConverter.parseListObject(pageRepository.findAll(pageable).getContent(), PessoaVO.class);
+	}
+	
 	public PessoaVO criar(PessoaVO pessoaVO) {
 		Pessoa pessoa = DozerConverter.parseObject(pessoaVO, Pessoa.class);
 		return DozerConverter.parseObject(repository.save(pessoa), PessoaVO.class);

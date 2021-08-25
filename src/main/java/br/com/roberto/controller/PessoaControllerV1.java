@@ -39,25 +39,31 @@ public class PessoaControllerV1 {
 		return new ResponseEntity<PessoaVO>(HttpStatus.NOT_FOUND);
 	}
 	
-	@GetMapping(value="/listartodos", produces = {"application/json", "application/xml"})
+	@GetMapping(value="/listartodos")
 	public ResponseEntity<ListaPessoaVO> findAll(Pageable pageble) throws PessoaException{
 		ListaPessoaVO lpessoa = new ListaPessoaVO();
 		List<PessoaVO> lRetorno = service.retornaPessoas(pageble);
 		if (!lRetorno.isEmpty()) {
 			lpessoa.getPessoas().addAll(lRetorno);
+			lRetorno.stream().forEachOrdered(p -> p.add(linkTo(methodOn(PessoaControllerV1.class).findById(String.valueOf(p.getIdentificador()))).withSelfRel()));
 			return new ResponseEntity<ListaPessoaVO>(lpessoa, HttpStatus.OK);
 		}
 		return new ResponseEntity<ListaPessoaVO>(HttpStatus.NOT_FOUND);
 	}
 	
+
 	@PostMapping(value="/criar")
-	public PessoaVO criar(@RequestBody PessoaVO pessoa){
-		return service.criar(pessoa);
+	public ResponseEntity<PessoaVO> criar(@RequestBody PessoaVO pessoa){
+		PessoaVO pessoaVO = service.criar(pessoa); 
+		pessoaVO.add(linkTo(methodOn(PessoaControllerV1.class).findById(String.valueOf(pessoaVO.getIdentificador()))).withSelfRel());
+		return new ResponseEntity<PessoaVO>(pessoaVO, HttpStatus.OK);
 	}
 	
 	@PutMapping(value = "/atualizar")
-	public PessoaVO atualizar(@RequestBody PessoaVO pessoa){
-		return service.atualizar(pessoa);
+	public ResponseEntity<PessoaVO> atualizar(@RequestBody PessoaVO pessoa){
+		PessoaVO pessoaVO = service.atualizar(pessoa); 
+		pessoaVO.add(linkTo(methodOn(PessoaControllerV1.class).findById(String.valueOf(pessoaVO.getIdentificador()))).withSelfRel());
+		return new ResponseEntity<PessoaVO>(pessoaVO, HttpStatus.OK);
 	}
 
 	@DeleteMapping(value = "/excluir/{id}")
