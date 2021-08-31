@@ -9,6 +9,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import br.com.roberto.exceptions.CalculadoraException;
+import br.com.roberto.exceptions.InvalidJwtAutheticattionException;
 import br.com.roberto.exceptions.OperacaoNaoSuportada;
 import br.com.roberto.exceptions.PessoaException;
 import br.com.roberto.util.DataUtil;
@@ -32,6 +33,12 @@ public class CustomCalculadoraExceptionHandler extends ResponseEntityExceptionHa
 	
 	@ExceptionHandler(OperacaoNaoSuportada.class)
 	public final ResponseEntity<CalculadoraException> handlerBadRequestExceptions(Exception ex, WebRequest request) {
+		CalculadoraException exception = new CalculadoraException(DataUtil.ddMMyyyhhmmss24H(), ex.getMessage(), request.getDescription(false));
+		return new ResponseEntity<CalculadoraException>(exception, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(InvalidJwtAutheticattionException.class)
+	public final ResponseEntity<CalculadoraException> InvalidJwtAutheticattionException(Exception ex, WebRequest request) {
 		CalculadoraException exception = new CalculadoraException(DataUtil.ddMMyyyhhmmss24H(), ex.getMessage(), request.getDescription(false));
 		return new ResponseEntity<CalculadoraException>(exception, HttpStatus.BAD_REQUEST);
 	}
