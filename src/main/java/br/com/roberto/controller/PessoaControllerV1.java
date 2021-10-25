@@ -1,8 +1,10 @@
 package br.com.roberto.controller;
 
-import java.util.List;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -21,14 +23,22 @@ import br.com.roberto.data.vo.PessoaVO;
 import br.com.roberto.exceptions.PessoaException;
 import br.com.roberto.service.PessoaService;
 import br.com.roberto.util.DataUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+//@Api(value = "EndPoint_Pessoa",description = "TESTE DESCRIÇÃO", tags = {"Gerir Pessoa"})
+@Api(tags="Gerir Pessoa", description = "Função para gerenciar e manipular dados de pessoa no banco.")
 @RestController
-@RequestMapping("/pessoa/v1")
+@RequestMapping("/api/v1/pessoa")
 public class PessoaControllerV1 {
 
 	@Autowired
 	private PessoaService service;
 	
+	
+	
+	
+	@ApiOperation(value="Recuperar pessoa por id")
 	@GetMapping(value="/{id}")
 	public ResponseEntity<PessoaVO> findById(@PathVariable("id")String id) throws PessoaException {
 		if (id != null) {
@@ -39,6 +49,7 @@ public class PessoaControllerV1 {
 		return new ResponseEntity<PessoaVO>(HttpStatus.NOT_FOUND);
 	}
 	
+	@ApiOperation(value = "Buscar todas as pessoas paginado")
 	@GetMapping(value="/listartodos")
 	public ResponseEntity<ListaPessoaVO> findAll(Pageable pageble) throws PessoaException{
 		ListaPessoaVO lpessoa = new ListaPessoaVO();
@@ -52,6 +63,7 @@ public class PessoaControllerV1 {
 	}
 	
 
+	@ApiOperation(value="Criar nova pessoa")
 	@PostMapping(value="/criar")
 	public ResponseEntity<PessoaVO> criar(@RequestBody PessoaVO pessoa){
 		PessoaVO pessoaVO = service.criar(pessoa); 
@@ -59,6 +71,7 @@ public class PessoaControllerV1 {
 		return new ResponseEntity<PessoaVO>(pessoaVO, HttpStatus.OK);
 	}
 	
+	@ApiOperation(value="Atualizar dados da pessoa")
 	@PutMapping(value = "/atualizar")
 	public ResponseEntity<PessoaVO> atualizar(@RequestBody PessoaVO pessoa){
 		PessoaVO pessoaVO = service.atualizar(pessoa); 
@@ -66,6 +79,7 @@ public class PessoaControllerV1 {
 		return new ResponseEntity<PessoaVO>(pessoaVO, HttpStatus.OK);
 	}
 
+	@ApiOperation(value="Excluir pessoa")
 	@DeleteMapping(value = "/excluir/{id}")
 	public void excluir(@PathVariable("id")String idPessoa) throws PessoaException{
 		if (idPessoa != null) {
