@@ -35,6 +35,9 @@ public class PessoaControllerV1 {
 	@Autowired
 	private PessoaService service;
 	
+	
+	
+	
 	@ApiOperation(value="Recuperar pessoa por id")
 	@GetMapping(value="/{id}")
 	public ResponseEntity<PessoaVO> findById(@PathVariable("id")String id) throws PessoaException {
