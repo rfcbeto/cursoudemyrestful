@@ -2,6 +2,7 @@ package br.com.roberto.controller;
 
 import java.util.List;
 
+import org.apache.logging.log4j.util.PropertiesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -42,6 +43,12 @@ public class PessoaControllerV2 {
 	@ApiOperation("Recupear todas as pessoa da base paginado")
 	@GetMapping(value="/listartodos")
 	public ResponseEntity<List<PessoaVO>> findAll(Pageable pageable) throws PessoaException{
+		String testgetClass = this.getClass().getClassLoader().getResource("").getPath();
+		String testProperties = PropertiesUtil.class.getResource("/").getPath();
+		String testThisClass = PessoaControllerV2.class.getResource("/").getPath();
+		System.out.println(testgetClass);
+		System.out.println(testProperties);
+		System.out.println(testThisClass);
 		return new ResponseEntity<>(service.retornaPessoas(pageable), HttpStatus.OK);
 	}
 	
